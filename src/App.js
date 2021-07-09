@@ -1,68 +1,61 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
-import Card from "./components/Card";
-import ListaPokemon from "./components/ListaPokemon/ListaPokemon";
+import Lista from "./components/Lista/Lista";
 import axios from "axios";
+import "./App.css";
 
 function App() {
-  const [pokemon, setPokemon] = useState("");
-  const [pokeCard, setPokeCard] = useState({});
-  const [pokeList, setPokeList] = useState([]);
+  const [pokemon, setPokemon] = useState([]);
+  const [pokeInput, setPokeInput] = useState(""); //Inicializa el estado en string vacío
+  const [find, setFind] = useState(true); //Inicializa en True para que no salga el mensaje de Pokémon no encontrado
+  // const [pokeCard, setPokemonCard] = useState({});
+  // const [pokeList, setPokeList] = useState([]);
 
-  useEffect(() => {
-    if (pokemon !== "") {
-      getPokeInfo(pokemon);
-    }
-  }, [pokemon]);
-
-  useEffect(async () => {
-    if (pokeList.length === 0 && Object.keys(pokeCard).length !== 0) {
-      await setPokeList([pokeCard]);
-    } else if (pokeList.length !== 0 && Object.keys(pokeCard).length !== 0) {
-      await setPokeList([...pokeList, pokeCard]);
-    }
-  }, [pokeCard]);
-
-  const getPokeInfo = async (name) => {
-    const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
-    const pokeInfo = res.data;
-    await setPokeCard(pokeInfo);
+    //AQUÍ RECOGE DEL INPUT
+  const handleSubmit = (e) => {
+    let value = (e.target.value);
+    setPokeInput(value);
+    console.log(pokeInput);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await setPokemon(e.target.pokemon.value.toLowerCase());
-    e.target.reset();
-  };
+  //Fetch
+  const getPokeInfo = () => {
+    let url = `https://pokeapi.co/api/v2/pokemon/${pokeInput}`
+    axios.get(url)
+      .then(response => {
+        // console.log(response.data)
+        if(response.data) {
+        setPokemon([...pokemon, response.data])
+        console.log(pokemon) // no sale el valor que se acaba de setear en el estado
+        setFind(true)
+        }
+        //setea el input a vacío. A su vez le tengo que pasar un value al input con el nuevo estado
+        setPokeInput('')
+      })
+      .catch(error => {
+        setFind(false) //
+      })
+  }
+
+
+  
+  // useEffect(async () => {
+  //   if (pokeList.length === 0 && Object.keys(pokeCard).length !== 0) {
+  //     await setPokeList([pokeCard]);
+  //   } else if (pokeList.length !== 0 && Object.keys(pokeCard).length !== 0) {
+  //     await setPokeList([...pokeList, pokeCard]);
+  //   }
+  // }, [pokeCard]);
+
 
   return (
     <div className='App'>
-      <form onSubmit={handleSubmit}>
-      <img className="dld"src="https://www.3dnatives.com/es/wp-content/uploads/sites/4/Pokemoan-dildos.jpg" alt="dld" />
-        <label htmlFor='pokemon'>Elije tu Pokémon para la batalla!</label>
-        <input type='text' name='pokemon' />
-        <button type='submit'>TE ELIJO A TI !!</button>
-      </form>
-      {Object.keys(pokeCard).length !== 0 ? (
-        <>
-          <h2>Pokédex</h2>
-          <ul>
-            <Card data={pokeCard} />
-          </ul>
-        </>
-      ) : (
-        ""
-      )}
-      {pokeList.length > 0 ? (
-        <>
-          <h2>Historial de búsqueda</h2>
-          <ul className='ListaPokemon'>
-            <ListaPokemon data={pokeList} />
-          </ul>
-        </>
-      ) : (
-        ""
-      )}
+
+      <img className="dld"src="https://images.wikidexcdn.net/mwuploads/esssbwiki/7/77/latest/20111028181540/TituloUniversoPok%C3%A9mon.png" alt="dld" /> <br />
+        <label htmlFor='pokemon'>ELIJE UN POKÉMON PARA LA BATALLA!!</label> <br />
+        <input type='text' name='pokemon' value={pokeInput} onChange={handleSubmit}/> <br />
+        <button onClick={getPokeInfo}>TE ELIJO A TI!!</button>
+        {find?<Lista data={pokemon} /> : <h3>Pokémon no encontrado</h3>} 
+        <img className="pokeball" src="https://www.pngplay.com/wp-content/uploads/2/Pokeball-PNG-Pic-Background.png" alt="pok" />
     </div>
   );
 }

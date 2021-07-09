@@ -1,31 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 *{
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  background-color: white;
-}
-label{
-  font-size: 18px;
-  margin-top: 24px;
-}
-input{
-  border: solid 2px rgb(19, 57, 182);
-  border-radius: 12px;
-  background-color: rgb(240, 226, 106);
-}
-button{
-  border: solid 2px rgb(19, 57, 182);
-  border-radius: 12px;
-  padding: 0px 30px 0px 30px;
-  background-color: rgb(240, 226, 106);
-}
+    font-family: 'Press Start 2P';
+    background-color: black;
+    color: white;  
+  }
 
-.Card {
-  list-style: none;
-  margin: 15px;
-  
-}
-.dld{
-  text-align: center;
-  width: 250px;
-  height: 250px;
-}
+  label{
+    font-family: 'Press Start 2P';
+    font-size: 12px;
+    margin-top: 24px;
+  }
 
+  input{
+    color: rgb(19, 57, 182);
+    font-size: 16px;
+    text-align: center;
+    border: solid 4px rgb(19, 57, 182);
+    border-radius: 18px;
+    background-color: rgb(224, 206, 42);
+    margin: 36px 0px 12px 0px;
+    padding: 8px 10px 8px 10px;
+  }
+
+  button{
+    border: solid 4px rgb(224, 206, 42);
+    border-radius: 16px;
+    padding: 4px 35px 4px 35px;
+    background-color: rgb(19, 57, 182);
+    color: rgb(224, 206, 42);
+    font-size: 12px;
+   
+  }
+
+  .Card {
+    list-style: none;
+    margin: 15px;
+    
+  }
+
+  img{
+    margin-top: 24px;
+  }
+
+  .pokeball{
+    width: 150px;
+    height: 150px;
+  }

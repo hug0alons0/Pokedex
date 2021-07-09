@@ -1,31 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 import "./Card.css";
 
-class Card extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+function Card (props){
+  console.log(props);
 
-  render() {
     return (
-      <li className='Card'>
-        
-        <img
-          src={this.props.data.sprites.front_default}
-          alt={this.props.data.name}
+      <div className="tarjeta">
+        <img className="imgpoke"
+          src={props.url} //Sólo nombre de props declaradas en List, dentro del Componente Card
+          alt={props.name}
         />
-        <p>
-          <strong>Nombre: </strong>
-          {this.props.data.name}
-        </p>
-        <p>
-          <strong>Tipo: </strong>
-          {this.props.data.types[0].type.name}
-        </p>
-      </li>
+        <p>{props.name}</p>
+        <p>{props.type}</p>
+      </div>
     );
   }
-}
+
+
 
 export default Card;
